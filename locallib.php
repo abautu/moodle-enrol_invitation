@@ -215,7 +215,7 @@ class invitation_manager {
                 $messageparams->rejectinvitation = get_string('invitationrejectbutton', 'enrol_invitation');
 
                 // Check if user exists.
-                $contactuser = $DB->get_record('user', ['email' => $invitation->email]);
+                $contactuser = $DB->get_record_select('user', 'LOWER(email)=LOWER(:email)', ['email' => $invitation->email]);
                 $userexits = !empty($contactuser);
 
                 // Replace tags with text.
