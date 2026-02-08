@@ -27,6 +27,7 @@
  */
 
 require('../../config.php');
+require($CFG->dirroot . '/enrol/invitation/lib.php');
 require($CFG->dirroot . '/enrol/invitation/locallib.php');
 
 // Check if param reject exists.
