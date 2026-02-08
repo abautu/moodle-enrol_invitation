@@ -32,23 +32,22 @@ require_once(dirname(__FILE__) . '/invitation_form.php');
 require_once($CFG->dirroot . '/enrol/locallib.php');
 require_once($CFG->libdir . '/tablelib.php');
 
-require_login();
 $courseid = required_param('courseid', PARAM_INT);
 $inviteid = optional_param('inviteid', 0, PARAM_INT);
 $actionid = optional_param('actionid', 0, PARAM_INT);
-$course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);
 
-$context = context_course::instance($courseid);
+// Set up page.
+$PAGE->set_url(new moodle_url('/enrol/invitation/history.php', ['courseid' => $courseid]));
+require_login($courseid, false);
+$course = $PAGE->course;
+$context = $PAGE->context;
+
 if (!has_capability('enrol/invitation:enrol', $context)) {
     $courseurl = new moodle_url('/course/view.php', ['id' => $courseid]);
     throw new moodle_exception('nopermissiontosendinvitation', 'enrol_invitation', $courseurl);
 }
 
-// Set up page.
-$PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/enrol/invitation/history.php', ['courseid' => $courseid]));
 $PAGE->set_pagelayout('course');
-$PAGE->set_course($course);
 $pagetitle = get_string('invitehistory', 'enrol_invitation');
 $PAGE->set_heading($pagetitle);
 $PAGE->set_title($pagetitle);
