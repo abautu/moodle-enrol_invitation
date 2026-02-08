@@ -108,7 +108,7 @@ class invitation_manager {
     /**
      * Send invitation (create a unique token for each of them).
      *
-     * @param array $data  data processed from the invite form, or an invite
+     * @param object $data  data processed from the invite form, or an invite
      * @param bool $resend resend the invite specified by $data
      */
     public function send_invitations($data, $resend = false) {
