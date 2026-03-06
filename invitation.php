@@ -50,13 +50,7 @@ echo $OUTPUT->header();
 // Print out a heading.
 echo $OUTPUT->heading($pagetitle, 2, 'headingblock');
 
-if (!has_capability('enrol/invitation:enrol', $context)) {
-    echo $OUTPUT->notification(get_string('success'), 'notifysuccess');
-    $return = new moodle_url('/');
-    echo $OUTPUT->continue_button($return);
-    echo $OUTPUT->footer();
-    exit;
-}
+require_capability('enrol/invitation:enrol', $context);
 
 print_page_tabs('invite');  // OUTPUT page tabs.
 

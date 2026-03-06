@@ -42,10 +42,7 @@ require_login($courseid, false);
 $course = $PAGE->course;
 $context = $PAGE->context;
 
-if (!has_capability('enrol/invitation:enrol', $context)) {
-    $courseurl = new moodle_url('/course/view.php', ['id' => $courseid]);
-    throw new moodle_exception('nopermissiontosendinvitation', 'enrol_invitation', $courseurl);
-}
+require_capability('enrol/invitation:enrol', $context);
 
 $PAGE->set_pagelayout('course');
 $pagetitle = get_string('invitehistory', 'enrol_invitation');
