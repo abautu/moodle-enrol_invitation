@@ -458,7 +458,7 @@ class invitation_manager {
             $user = $USER;
         } else {
             $noticeobject = preparenoticeobject($invitation);
-            throw new moodle_exception('loggedinnot', 'enrol_invitation', $noticeobject);
+            throw new moodle_exception('loggedinnot', 'enrol_invitation', '', $noticeobject);
         }
 
         $enrol = enrol_get_plugin('invitation');
