@@ -76,7 +76,7 @@ if (empty($invites)) {
     echo $OUTPUT->notification(get_string('noinvitehistory', 'enrol_invitation'), 'notifymessage');
 } else {
     // Update invitation if the user decided to revoke/extend/resend an invite.
-    if ($inviteid && $actionid) {
+    if ($inviteid && $actionid && confirm_sesskey()) {
         if (!$currinvite = $invites[$inviteid]) {
             throw new moodle_exception('invalidinviteid');
         }
@@ -194,7 +194,7 @@ if (empty($invites)) {
 
         // Are there any actions user can do?
         $row[5] = '';
-        $url = new moodle_url('/enrol/invitation/history.php', ['courseid' => $courseid, 'inviteid' => $invite->id]);
+        $url = new moodle_url('/enrol/invitation/history.php', ['courseid' => $courseid, 'inviteid' => $invite->id, 'sesskey' => sesskey()]);
         // Same if statement as above, seperated for clarity.
         if ($status == get_string('status_invite_active', 'enrol_invitation')) {
             // Create link to revoke an invite.
