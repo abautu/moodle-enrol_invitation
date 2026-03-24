@@ -55,7 +55,7 @@ $PAGE->set_title($pagetitle);
 $PAGE->navbar->add($pagetitle);
 
 // Do not display the page if we are going to be redirecting the user.
-if ($actionid != invitation_manager::INVITE_RESEND) {
+if (empty($actionid)) {
     // OUTPUT form.
     echo $OUTPUT->header();
 
@@ -92,12 +92,12 @@ if (empty($invites)) {
 
             \enrol_invitation\event\invitation_deleted::create_from_invitation($currinvite)->trigger();
 
-            echo $OUTPUT->notification(get_string('revoke_invite_sucess', 'enrol_invitation'), 'notifysuccess');
+            redirect($PAGE->url, get_string('revoke_invite_sucess', 'enrol_invitation'), null, \core\output\notification::NOTIFY_SUCCESS);
         } else if ($actionid == invitation_manager::INVITE_EXTEND) {
             // Resend the invite and email.
             $invitationmanager->send_invitations($currinvite, true);
 
-            echo $OUTPUT->notification(get_string('extend_invite_sucess', 'enrol_invitation'), 'notifysuccess');
+            redirect($PAGE->url, get_string('extend_invite_sucess', 'enrol_invitation'), null, \core\output\notification::NOTIFY_SUCCESS);
         } else if ($actionid == invitation_manager::INVITE_RESEND) {
             // Send the user to the invite form with prefilled data.
             $redirect = new moodle_url(
@@ -108,9 +108,6 @@ if (empty($invites)) {
         } else {
             throw new moodle_exception('invalidactionid');
         }
-
-        // Get the updated invites.
-        $invites = $invitationmanager->get_invites();
     }
 
     // Columns to display.
